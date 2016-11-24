@@ -1,0 +1,6 @@
+
+# Enable trace or not
+enable: true
+
+# The zipkin trace server
+server: 'localhost:9411'

@@ -1,0 +1,2 @@
+TraceConsumerFilter=me.hao0.trace.core.filter.TraceConsumerFilter
+TraceProviderFilter=me.hao0.trace.core.filter.TraceProviderFilter
