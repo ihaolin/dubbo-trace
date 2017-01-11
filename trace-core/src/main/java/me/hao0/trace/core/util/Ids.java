@@ -85,24 +85,17 @@ public class Ids {
         // 时间戳移位到前面41位的地方
         ts = ts << TIME_BITS_SHIFT_SIZE;
 
-        // 计数器递增
-        int count = counter.incrementAndGet();
-
         if (currentMillisecond == lastMillisecond) {
-
+            // 只有同一毫秒内，才使用小序号
+            int count = counter.incrementAndGet();
+            //如果计数器达到上限
             if (count >= MAX_COUNTER) {
-                throw new RuntimeException("too much requests cause counter overflow");
-            }
-        }
-        //如果计数器达到上限
-        if (count >= MAX_COUNTER) {
-            if (currentMillisecond == lastMillisecond) {
                 //同一毫秒内，直接抛异常，由调用方处理
                 throw new RuntimeException("too much requests cause counter overflow");
-            } else {
-                //只要时间戳变了，可以重新计数
-                counter = new AtomicInteger(0);
             }
+        }else{
+            // 计数器重设为0,不同毫秒，没有必要使用中间值
+            this.counter.set(0);
         }
 
         // 节点信息移位到指定位置
