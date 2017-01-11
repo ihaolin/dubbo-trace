@@ -12,6 +12,12 @@ Quick Start：
 		git clone git@github.com:ihaolin/dubbo-trace.git
 		```
 	
+	+ 本地安装：
+	
+	    ```bash
+	    mvn clean install -DskipTests
+	    ```
+	
 	+ 编辑``trace-demo``各项目对应配置：
 
 		+ app.properties：

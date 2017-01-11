@@ -4,10 +4,20 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Author: haolin
- * Email:  haolin.h0@gmail.com
- */
-public class Ids {
+ * 全局ID生成工具：
+ *
+ * 采用64个二进制位来组成一个long型数字(也就是一个19位长的十进制的数字）
+ * 第0位是符号位，始终为0
+ * 用41位来表示时间戳(精确到ms) 2^41=2199023255552，以当前时间(eg:1387123200000)来算，可以支持70年不重复
+ * 用10位表示当前服务器节点信息---->多节点部署不重复（多节点之间要注意时钟同步的问题）
+ * 用12位表示计数器，每ms可支持生成2^12=4096个不重复的顺序号---->足够了，不行就从节点信息借2位来用，^_^
+ * ------------------------------------------------------------
+ * |0|  41bits time stamp  | 10bits node_id | 12bits counter |
+ * ------------------------------------------------------------
+ * 最后生成结果，eg: 5862810367993839695  5862810367993839699 ......
+ **/
+@Deprecated
+public class OldIds {
 
     public static final int TOTAL_BITS_LENGTH = 63;
 
@@ -31,9 +41,9 @@ public class Ids {
 
     private long lastMillisecond;
 
-    private static Ids instance = new Ids();
+    private static OldIds instance = new OldIds();
 
-    private Ids() {
+    private OldIds() {
         this.nodeId = new Random().nextInt(1023) + 1;
         this.counter = new AtomicInteger(0);
     }
@@ -76,17 +86,25 @@ public class Ids {
         // 时间戳移位到前面41位的地方
         ts = ts << TIME_BITS_SHIFT_SIZE;
 
+        // 计数器递增
+        int count = counter.incrementAndGet();
+
         if (currentMillisecond == lastMillisecond) {
-            // 只有同一毫秒内，才使用小序号
-            int count = counter.incrementAndGet();
-            //如果计数器达到上限
+
             if (count >= MAX_COUNTER) {
-                //同一毫秒内，直接抛异常，由调用方处理
                 throw new RuntimeException("too much requests cause counter overflow");
             }
-        }else{
-            // 计数器重设为0,不同毫秒，没有必要使用中间值
-            this.counter.set(0);
+        }
+
+        //如果计数器达到上限
+        if (count >= MAX_COUNTER) {
+            if (currentMillisecond == lastMillisecond) {
+                //同一毫秒内，直接抛异常，由调用方处理
+                throw new RuntimeException("too much requests cause counter overflow");
+            } else {
+                //只要时间戳变了，可以重新计数
+                counter = new AtomicInteger(0);
+            }
         }
 
         // 节点信息移位到指定位置

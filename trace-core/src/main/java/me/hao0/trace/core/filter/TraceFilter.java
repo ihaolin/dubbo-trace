@@ -11,6 +11,7 @@ import me.hao0.trace.core.config.TraceConf;
 import me.hao0.trace.core.config.TraceConfLoader;
 import me.hao0.trace.core.config.TracePoint;
 import me.hao0.trace.core.util.Ids;
+import me.hao0.trace.core.util.OldIds;
 import me.hao0.trace.core.util.ServerInfo;
 import me.hao0.trace.core.util.Times;
 import org.slf4j.Logger;

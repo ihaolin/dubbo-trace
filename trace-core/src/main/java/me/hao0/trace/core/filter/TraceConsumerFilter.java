@@ -12,6 +12,7 @@ import com.twitter.zipkin.gen.Span;
 import me.hao0.trace.core.TraceConstants;
 import me.hao0.trace.core.TraceContext;
 import me.hao0.trace.core.util.Ids;
+import me.hao0.trace.core.util.OldIds;
 import me.hao0.trace.core.util.Networks;
 import me.hao0.trace.core.util.Times;
 
