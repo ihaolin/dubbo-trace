@@ -100,6 +100,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 ### 2.2 consumer注解配置
 
 > 消费服务时，需要指定filter类型为"TraceConsumerFilter"
+
 ```
     @Reference(version="1.0.0",filter="TraceConsumerFilter")
     public  com.jinhui.api.service.UserService userService;
