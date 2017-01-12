@@ -98,6 +98,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 ```
 
 ### 2.2 consumer注解配置
+
 > 消费服务时，需要指定filter类型为"TraceConsumerFilter"
 ```
     @Reference(version="1.0.0",filter="TraceConsumerFilter")
@@ -108,6 +109,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 ```
 
 ### 2.3 provider注解配置
+
 > 提供服务时，需要指定filter类型为“TraceProviderFilter”
 
 ```
