@@ -2,6 +2,8 @@
 从url开始进行trace.因此，需要配置url.
 如果url不进行配置，是跟踪不了的。
 
+> 注:1.1.0版本，增加了直接问我consumer拦截功能，不需要从url进行拦截了.
+
 ## 2.配置方法
 顺序为：
 - yaml配置
@@ -11,7 +13,7 @@
 以上几个个步骤，缺一不可。
 
 ### 2.0 yml配置
-在classpath下。我的的resouces目录下面。
+在classpath下的resouces目录下面。
 创建文件track.yml。
 其中，url类型和非url类型是不同的。
 - url类型，需要配置points.
