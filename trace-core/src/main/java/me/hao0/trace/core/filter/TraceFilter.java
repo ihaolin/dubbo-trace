@@ -6,12 +6,13 @@ import com.twitter.zipkin.gen.Annotation;
 import com.twitter.zipkin.gen.BinaryAnnotation;
 import com.twitter.zipkin.gen.Endpoint;
 import com.twitter.zipkin.gen.Span;
-import me.hao0.trace.core.*;
+import me.hao0.trace.core.TraceAgent;
+import me.hao0.trace.core.TraceConstants;
+import me.hao0.trace.core.TraceContext;
 import me.hao0.trace.core.config.TraceConf;
 import me.hao0.trace.core.config.TraceConfLoader;
 import me.hao0.trace.core.config.TracePoint;
 import me.hao0.trace.core.util.Ids;
-import me.hao0.trace.core.util.OldIds;
 import me.hao0.trace.core.util.ServerInfo;
 import me.hao0.trace.core.util.Times;
 import org.slf4j.Logger;
@@ -135,6 +136,9 @@ public class TraceFilter implements Filter {
 
         // send trace spans
         agent.send(TraceContext.getSpans());
+
+        // clear trace context
+        TraceContext.clear();
     }
 
     private TracePoint matchTrace(String uri) {
