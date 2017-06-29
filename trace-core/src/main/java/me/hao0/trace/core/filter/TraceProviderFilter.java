@@ -61,7 +61,6 @@ public class TraceProviderFilter implements Filter {
 
         Result result = invoker.invoke(invocation);
         RpcResult rpcResult = (RpcResult)result;
-
         endTrace(invoker, rpcResult, providerSpan, watch);
 
         attaches.put(TraceConstants.SS_TIME,String.valueOf(Times.currentMicros()));
@@ -123,7 +122,6 @@ public class TraceProviderFilter implements Filter {
         // collect the span
         TraceContext.addSpan(providerSpan);
         agent.send(TraceContext.getSpans());
-
         TraceContext.clear();
     }
 }

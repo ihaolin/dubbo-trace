@@ -91,7 +91,6 @@ public class TraceConsumerFilter implements Filter {
 
         consumeSpan.setId(id);
         consumeSpan.setTrace_id(traceId);
-
         String serviceName = invoker.getInterface().getSimpleName() + "." + invocation.getMethodName() + "." + "C";
         consumeSpan.setName(serviceName);
         long timestamp = Times.currentMicros();
